@@ -65,6 +65,7 @@ def clean_titanic(df):
     drop columns not needed, 
     fill missing embarktown with 'Southampton',
     create dummy vars of sex and embark_town(encoding)
+    drop sex and embark_town since it is encoded
     
     and return a single cleaned dataframe
     '''
@@ -72,6 +73,7 @@ def clean_titanic(df):
     df.drop(columns=['deck', 'embarked', 'class', 'age'], inplace=True)
     df.embark_town.fillna(value='Southampton', inplace=True)
     dummy_df = pd.get_dummies(df[['sex', 'embark_town']], drop_first=True)
+    df = df.drop(columns=['sex', 'embark_town'])
     return pd.concat([df, dummy_df], axis=1)
 
 
