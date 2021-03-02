@@ -4,6 +4,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 
 
+###################### Prepare Iris Data ######################
 
 
 def clean_iris(df):
@@ -25,7 +26,6 @@ def clean_iris(df):
     dummies = pd.get_dummies(df[['species']], drop_first=True)
     
     return pd.concat([df, dummies], axis=1)
-
 
 
 
@@ -51,6 +51,40 @@ def prep_iris(df):
     train, validate = train_test_split(train_validate, train_size=0.7, random_state=123, stratify=train_validate.species)
     
     return train, validate, test   
+
+
+
+
+###################### Prepare Titanic Data ######################
+
+
+def clean_titanic():
+    '''
+    This function will:
+    drop any duplicate observations, 
+    drop columns not needed, 
+    fill missing embarktown with 'Southampton',
+    create dummy vars of sex and embark_town(encoding)
+    
+    and return a single cleaned dataframe
+    '''
+    df.drop_duplicates(inplace=True)
+    df.drop(columns=['deck', 'embarked', 'class', 'age'], inplace=True)
+    df.embark_town.fillna(value='Southampton', inplace=True)
+    dummy_df = pd.get_dummies(df[['sex', 'embark_town']], drop_first=True)
+    return pd.concat([df, dummy_df], axis=1)
+
+
+
+def prep_titanic_data():
+    df = clean_titanic()
+    train_validate, test = train_test_split(df, test_size=.2, random_state=123, stratify=df.survived)
+    train, validate = train_test_split(train_validate, 
+                                       test_size=.3, 
+                                       random_state=123, 
+                                       stratify=train_validate.survived)
+    train, validate, test = impute_mode()
+    return train, validate, test
 
 
 
