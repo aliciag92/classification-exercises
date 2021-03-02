@@ -58,7 +58,7 @@ def prep_iris(df):
 ###################### Prepare Titanic Data ######################
 
 
-def clean_titanic():
+def clean_titanic(df):
     '''
     This function will:
     drop any duplicate observations, 
@@ -76,7 +76,7 @@ def clean_titanic():
 
 
 
-def prep_titanic_data():
+def prep_titanic_data(df):
     df = clean_titanic()
     train_validate, test = train_test_split(df, test_size=.2, random_state=123, stratify=df.survived)
     train, validate = train_test_split(train_validate, 
