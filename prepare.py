@@ -79,13 +79,12 @@ def clean_titanic(df):
 
 
 def prep_titanic(df):
-    df = clean_titanic()
+    df = clean_titanic(df)
     train_validate, test = train_test_split(df, test_size=.2, random_state=123, stratify=df.survived)
     train, validate = train_test_split(train_validate, 
                                        test_size=.3, 
                                        random_state=123, 
                                        stratify=train_validate.survived)
-    train, validate, test = impute_mode()
     return train, validate, test
 
 
