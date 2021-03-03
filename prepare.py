@@ -69,12 +69,22 @@ def clean_titanic(df):
     
     and return a single cleaned dataframe
     '''
+        # drop duplicate rows
     df.drop_duplicates(inplace=True)
+
+        # removing duplicates and columns w/ too many nulls
     df.drop(columns=['deck', 'embarked', 'class', 'age'], inplace=True)
+
+        # fill in missing values on embark_town w/ most common value "Southampton"
     df.embark_town.fillna(value='Southampton', inplace=True)
+
+        #encode categorical variables that remain as strings/objects
     dummy_df = pd.get_dummies(df[['sex', 'embark_town']], drop_first=True)
     df = df.drop(columns=['sex', 'embark_town'])
+
     return pd.concat([df, dummy_df], axis=1)
+
+
 
 
 
